@@ -5,6 +5,7 @@ import { AuthServiceService } from '../services/auth-service.service';
 
 // SweetAlert2
 import Swal from 'sweetalert2'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -29,7 +30,8 @@ export class LoginComponent {
   // Constructor
   constructor(
     private formBuilder: FormBuilder,
-    private auth: AuthServiceService
+    private auth: AuthServiceService,
+    private router: Router
   ) {}
 
   // กำหนดค่าเริ่มต้นให้กับ FormBuilder
@@ -62,6 +64,10 @@ export class LoginComponent {
             icon: 'success',
             confirmButtonText: 'OK'
           })
+          // เก็บ Token ไว้ใน LocalStorage
+          localStorage.setItem('token', data.token);
+          // ส่งไปหน้า Dashboard
+          this.router.navigate(['/backend/dashboard']);
         },
         error: (error: any) => {
           console.log(error);
